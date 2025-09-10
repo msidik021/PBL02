@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin Toko Online</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>Dashboard</h2>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active"><a href="#">Ringkasan</a></li>
+                    <li><a href="#">Produk</a></li>
+                    <li><a href="#">Pesanan</a></li>
+                    <li><a href="#">Pelanggan</a></li>
+                    <li><a href="#">Halaman</a></li>
+                    <li><a href="#">Pengaturan</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>Halo, Admin!</h1>
+                <p>Selamat datang kembali di dashboard Anda.</p>
+            </header>
+
+            <section class="summary-cards">
+                <div class="card">
+                    <h3>Total Penjualan</h3>
+                    <p class="data-value">Rp 12.500.000</p>
+                    <p class="sub-text">Dalam 30 hari terakhir</p>
+                </div>
+                <div class="card">
+                    <h3>Pesanan Baru</h3>
+                    <p class="data-value">45</p>
+                    <p class="sub-text">Menunggu diproses</p>
+                </div>
+                <div class="card">
+                    <h3>Produk Terjual</h3>
+                    <p class="data-value">189</p>
+                    <p class="sub-text">Total semua produk</p>
+                </div>
+            </section>
+
+            <section class="recent-orders">
+                <h2>Pesanan Terbaru</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No. Pesanan</th>
+                            <th>Pelanggan</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#ORD-001</td>
+                            <td>Budi Santoso</td>
+                            <td>Rp 220.000</td>
+                            <td><span class="status pending">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-002</td>
+                            <td>Siti Aisyah</td>
+                            <td>Rp 95.000</td>
+                            <td><span class="status delivered">Terkirim</span></td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-003</td>
+                            <td>Fajar Ramadhan</td>
+                            <td>Rp 150.000</td>
+                            <td><span class="status processing">Diproses</span></td>
+                        </tr>
+                        <tr>
+                            <td>#ORD-004</td>
+                            <td>Dewi Lestari</td>
+                            <td>Rp 350.000</td>
+                            <td><span class="status delivered">Terkirim</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+        </main>
+    </div>
+
+</body>
+</html>
