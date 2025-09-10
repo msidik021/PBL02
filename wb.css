@@ -1,0 +1,33 @@
+body {
+    font-family: sans-serif;
+    display: flex;
+    margin: 0;
+    height: 100vh;
+    background-color: #f0f2f5;
+}
+
+.toolbar {
+    width: 200px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.draggable-item {
+    cursor: grab;
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    text-align: center;
+    background-color: #e9ecef;
+    border-radius: 4px;
+}
+
+.canvas {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #fff;
+    border: 2px dashed #ccc;
+    margin: 20px;
+    position: relative;
+}
