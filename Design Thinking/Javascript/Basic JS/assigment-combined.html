@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assigment-Combined</title>
+</head>
+<body>
+    <script>
+    let tx;
+    tx = "This"; document.write("<p>" + tx + "<br>");
+    tx = tx + " is a"; document.write(tx + "<br>");
+    tx += " sentence."; document.write(tx + "</p>");
+
+    let z;
+    z = 6; document.write("<p>" + z + " ");
+    z++; document.write(z + " "); // Dihitung dan ditampilkan (6+1)
+    z--; document.write(z + " "); // Ditampilkan dulu baru dihitung (7-1)
+    z += 13; document.write(z + " "); // (6+13)
+    z -= 5; document.write(z + " "); // (19-5)
+    z *= 3; document.write(z + " "); // (14*3)
+    z /= 6; document.write(z + " "); // (42/6)
+    z %= 3; document.write(z + "</p>"); // (7%3)
+
+    let a = 5, b = 5, c = 5, d;
+    d = a++; document.write("<p>" + d + " "); // Ditampilkan dulu baru dihitung (5+1=6)
+    d = ++b; document.write(d + " "); // Dihitung dulu baru ditampilkan (1+6=7)
+    d = c++ + ++c + c++; document.write(d + "</p>"); // (5+7+7)
+</script>
+</body>
+</html>
