@@ -7,12 +7,12 @@ if (warnaLampu === "merah") {
   outputElement.style.color = "red";
 } else if (warnaLampu === "kuning") {
   // Jika inputnya "kuning", ubah konten elemen output.
-  outputElement.innerHTML = "Kendaraan berhati-hati.";
+  outputElement.innerHTML = "Kendaraan berhati-hati. Hati2 juga bisa ketabrak orang, Jangan lupa berdoa";
   // Mengubah warna teks output menjadi kuning
   outputElement.style.color = "orange";
 } else if (warnaLampu === "hijau") {
   // Jika inputnya "hijau", ubah konten elemen output.
-  outputElement.innerHTML = "Kendaraan berjalan. Maju terus";
+  outputElement.innerHTML = "Kendaraan berjalan. Maju terus pantang mundur";
   // Mengubah warna teks output menjadi hijau
   outputElement.style.color = "green";
 } else {
