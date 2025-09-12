@@ -15,8 +15,7 @@ if (warnaLampu === "merah") {
   outputElement.innerHTML = "Kendaraan berjalan. Maju terus pantang mundur";
   // Mengubah warna teks output menjadi hijau
   outputElement.style.color = "green";
-} else {
+} else
   // Jika inputnya tidak sesuai, berikan pesan error.
   outputElement.innerHTML = "Input tidak valid. Mohon masukkan 'merah', 'kuning', atau 'hijau'.";
   outputElement.style.color = "black";
-}

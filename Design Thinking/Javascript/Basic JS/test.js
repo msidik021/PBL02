@@ -1,2 +1,0 @@
-!!dadwa
-!HTMLAreaEl
