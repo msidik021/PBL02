@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Parser NIP</title>
+</head>
+<body>
+<script>
+  let nama = "Mohamad Septiawan";
+  let nip = prompt("Masukkan NIP (197209172005011002) " + nama + ":");
+
+  if (nip) {
+    let tglLahir = nip.slice(0, 8);
+    let tglASN = nip.slice(8, 14);
+    let gender = nip[14] === "1" ? "Pria" : "Wanita";
+    let noUrut = nip.slice(-3);
+
+    //  tanggal lahir
+    let tgl = new Date(
+      tglLahir.slice(0,4) + "-" + tglLahir.slice(4,6) + "-" + tglLahir.slice(6,8)
+    ).toLocaleDateString("id-ID", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+    alert(
+      "Nama: " + nama + "\n" +
+      "Tanggal Lahir: " + tgl + "\n" +
+      "Tanggal ASN: " + tglASN + "\n" +
+      "Jenis Kelamin: " + gender + "\n" +
+      "No. Urut: " + noUrut
+    );
+  }
+</script>
+</body>
+</html>
