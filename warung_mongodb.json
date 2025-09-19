@@ -1,0 +1,197 @@
+{
+  "pelanggan": [
+    {
+      "Kode": "PLG01",
+      "Nama": "Mohamad",
+      "Kelamin": "Pria",
+      "Alamat": "Priok",
+      "Kota": "Jakarta"
+    },
+    {
+      "Kode": "PLG02",
+      "Nama": "Naufal",
+      "Kelamin": "Pria",
+      "Alamat": "Cilincing",
+      "Kota": "Jakarta"
+    },
+    {
+      "Kode": "PLG03",
+      "Nama": "Atila",
+      "Kelamin": "Pria",
+      "Alamat": "Bojongsang",
+      "Kota": "Bandung"
+    },
+    {
+      "Kode": "PLG04",
+      "Nama": "Tsalsa",
+      "Kelamin": "Wanita",
+      "Alamat": "Buah Batu",
+      "Kota": "Bandung"
+    },
+    {
+      "Kode": "PLG05",
+      "Nama": "Damay",
+      "Kelamin": "Wanita",
+      "Alamat": "Gubeng",
+      "Kota": "Surabaya"
+    },
+    {
+      "Kode": "PLG06",
+      "Nama": "Tsaniy",
+      "Kelamin": "Pria",
+      "Alamat": "Darmo",
+      "Kota": "Surabaya"
+    },
+    {
+      "Kode": "PLG07",
+      "Nama": "Nabila",
+      "Kelamin": "Wanita",
+      "Alamat": "Lebak Bulus",
+      "Kota": "Jakarta"
+    }
+  ],
+  "produk": [
+    {
+      "Kode": "P001",
+      "Nama": "Indomie",
+      "Satuan": "Bungkus",
+      "Stok": 10,
+      "Harga": 3000
+    },
+    {
+      "Kode": "P002",
+      "Nama": "Roti",
+      "Satuan": "Pak",
+      "Stok": 3,
+      "Harga": 18000
+    },
+    {
+      "Kode": "P003",
+      "Nama": "Kecap",
+      "Satuan": "Botol",
+      "Stok": 8,
+      "Harga": 4700
+    },
+    {
+      "Kode": "P004",
+      "Nama": "Saos Tomat",
+      "Satuan": "Botol",
+      "Stok": 8,
+      "Harga": 5800
+    },
+    {
+      "Kode": "P005",
+      "Nama": "Bihun",
+      "Satuan": "Bungkus",
+      "Stok": 5,
+      "Harga": 3500
+    },
+    {
+      "Kode": "P006",
+      "Nama": "Sikat Gigi",
+      "Satuan": "Pak",
+      "Stok": 5,
+      "Harga": 15000
+    },
+    {
+      "Kode": "P007",
+      "Nama": "Pasta Gigi",
+      "Satuan": "Pak",
+      "Stok": 7,
+      "Harga": 10000
+    },
+    {
+      "Kode": "P008",
+      "Nama": "Saos Sambal",
+      "Satuan": "Botol",
+      "Stok": 5,
+      "Harga": 7300
+    }
+  ],
+  "penjualan": [
+    {
+      "No_Jual": "J001",
+      "Kode_Pelanggan": "PLG03",
+      "Tgl_Jual": "2025-09-08",
+      "Detail": [
+        {
+          "Kode_Produk": "P001",
+          "Jumlah": 2
+        },
+        {
+          "Kode_Produk": "P003",
+          "Jumlah": 1
+        },
+        {
+          "Kode_Produk": "P004",
+          "Jumlah": 1
+        }
+      ]
+    },
+    {
+      "No_Jual": "J002",
+      "Kode_Pelanggan": "PLG07",
+      "Tgl_Jual": "2025-09-08",
+      "Detail": [
+        {
+          "Kode_Produk": "P006",
+          "Jumlah": 3
+        },
+        {
+          "Kode_Produk": "P007",
+          "Jumlah": 1
+        }
+      ]
+    },
+    {
+      "No_Jual": "J003",
+      "Kode_Pelanggan": "PLG02",
+      "Tgl_Jual": "2025-09-09",
+      "Detail": [
+        {
+          "Kode_Produk": "P001",
+          "Jumlah": 5
+        },
+        {
+          "Kode_Produk": "P004",
+          "Jumlah": 2
+        },
+        {
+          "Kode_Produk": "P008",
+          "Jumlah": 2
+        },
+        {
+          "Kode_Produk": "P003",
+          "Jumlah": 1
+        }
+      ]
+    },
+    {
+      "No_Jual": "J004",
+      "Kode_Pelanggan": "PLG05",
+      "Tgl_Jual": "2025-09-10",
+      "Detail": [
+        {
+          "Kode_Produk": "P002",
+          "Jumlah": 2
+        },
+        {
+          "Kode_Produk": "P004",
+          "Jumlah": 2
+        },
+        {
+          "Kode_Produk": "P008",
+          "Jumlah": 2
+        },
+        {
+          "Kode_Produk": "P006",
+          "Jumlah": 2
+        },
+        {
+          "Kode_Produk": "P007",
+          "Jumlah": 1
+        }
+      ]
+    }
+  ]
+}
