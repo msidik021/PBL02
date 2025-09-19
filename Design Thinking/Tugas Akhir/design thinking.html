@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catatan Keuangan Pribadi</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #1a001f;
+      color: #f3e6ff;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      background: #4b006e;
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    /* Card Style */
+    .card {
+      background: #2a0030;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #e6b3ff;
+    }
+
+    /* Form Styles */
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    form input, form select, form button {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+    }
+
+    form input, form select {
+      flex: 1;
+      background: #3d004d;
+      color: #fff;
+    }
+
+    form input::placeholder {
+      color: #c7a0d4;
+    }
+
+    form button {
+      background: #8000ff;
+      color: #fff;
+      cursor: pointer;
+      flex: 1 100%;
+      transition: background 0.3s ease;
+    }
+
+    form button:hover {
+      background: #a64dff;
+    }
+
+    /* Summary Styles */
+    .summary {
+      display: flex;
+      justify-content: space-around;
+      text-align: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .summary div {
+      flex: 1;
+      padding: 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .income { background: #006633; }
+    .expense { background: #990033; }
+    .balance { background: #333399; }
+
+    /* Table Styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid #4b006e;
+    }
+
+    th {
+      background: #4b006e;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background: #2e0033;
+    }
+
+    .actions button {
+      padding: 5px 10px;
+      margin: 2px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .edit-btn {
+      background: #ffa31a;
+      color: #fff;
+    }
+
+    .delete-btn {
+      background: #cc0044;
+      color: #fff;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      form {
+        flex-direction: column;
+      }
+
+      .summary {
+        flex-direction: column;
+      }
+
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      th {
+        display: none;
+      }
+
+      td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+      }
+
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        text-align: left;
+        font-weight: bold;
+        color: #e6b3ff;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>📒 Catatan Keuangan Pribadi</header>
+  <main>
+    <!-- Form Input -->
+    <div class="card">
+      <h2>Tambah / Edit Transaksi</h2>
+      <form id="transactionForm">
+        <input type="date" id="date" required>
+        <input type="text" id="description" placeholder="Deskripsi" required>
+        <input type="number" id="amount" placeholder="Jumlah (Rp)" required>
+        <select id="type" required>
+          <option value="income">Pemasukan</option>
+          <option value="expense">Pengeluaran</option>
+        </select>
+        <input type="hidden" id="editIndex">
+        <button type="submit">Simpan</button>
+      </form>
+    </div>
+
+    <!-- Filter -->
+    <div class="card">
+      <h2>Filter Tanggal</h2>
+      <form id="filterForm">
+        <input type="date" id="filterStart">
+        <input type="date" id="filterEnd">
+        <button type="submit">Filter</button>
+        <button type="button" id="resetFilter">Reset</button>
+      </form>
+    </div>
+
+    <!-- Summary -->
+    <div class="card summary">
+      <div class="income">Pemasukan: Rp <span id="totalIncome">0</span></div>
+      <div class="expense">Pengeluaran: Rp <span id="totalExpense">0</span></div>
+      <div class="balance">Saldo: Rp <span id="balance">0</span></div>
+    </div>
+
+    <!-- Grafik -->
+    <div class="card">
+      <h2>Grafik Pemasukan vs Pengeluaran</h2>
+      <canvas id="financeChart" height="100"></canvas>
+    </div>
+
+    <!-- Table -->
+    <div class="card">
+      <h2>Daftar Transaksi</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Tanggal</th>
+            <th>Deskripsi</th>
+            <th>Jumlah</th>
+            <th>Jenis</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="transactionTable"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById('transactionForm');
+    const filterForm = document.getElementById('filterForm');
+    const resetFilterBtn = document.getElementById('resetFilter');
+    const transactionTable = document.getElementById('transactionTable');
+    const totalIncomeEl = document.getElementById('totalIncome');
+    const totalExpenseEl = document.getElementById('totalExpense');
+    const balanceEl = document.getElementById('balance');
+
+    let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+    let filteredTransactions = [...transactions];
+
+    // Chart setup
+    const ctx = document.getElementById('financeChart').getContext('2d');
+    let financeChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Pemasukan', 'Pengeluaran'],
+        datasets: [{
+          data: [0, 0],
+          backgroundColor: ['#33cc66', '#cc3366']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            labels: { color: '#fff' }
+          }
+        }
+      }
+    });
+
+    function renderTransactions() {
+      transactionTable.innerHTML = '';
+      filteredTransactions.forEach((t, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td data-label="Tanggal">${t.date}</td>
+          <td data-label="Deskripsi">${t.description}</td>
+          <td data-label="Jumlah">Rp ${parseInt(t.amount).toLocaleString()}</td>
+          <td data-label="Jenis">${t.type === 'income' ? 'Pemasukan' : 'Pengeluaran'}</td>
+          <td data-label="Aksi" class="actions">
+            <button class="edit-btn" onclick="editTransaction(${index})">Edit</button>
+            <button class="delete-btn" onclick="deleteTransaction(${index})">Hapus</button>
+          </td>
+        `;
+        transactionTable.appendChild(row);
+      });
+      updateSummary();
+    }
+
+    function updateSummary() {
+      let income = 0, expense = 0;
+      filteredTransactions.forEach(t => {
+        if (t.type === 'income') income += parseInt(t.amount);
+        else expense += parseInt(t.amount);
+      });
+      totalIncomeEl.textContent = income.toLocaleString();
+      totalExpenseEl.textContent = expense.toLocaleString();
+      balanceEl.textContent = (income - expense).toLocaleString();
+
+      // Update chart
+      financeChart.data.datasets[0].data = [income, expense];
+      financeChart.update();
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const date = document.getElementById('date').value;
+      const description = document.getElementById('description').value;
+      const amount = document.getElementById('amount').value;
+      const type = document.getElementById('type').value;
+      const editIndex = document.getElementById('editIndex').value;
+
+      if (editIndex) {
+        transactions[editIndex] = { date, description, amount, type };
+        document.getElementById('editIndex').value = '';
+      } else {
+        transactions.push({ date, description, amount, type });
+      }
+
+      localStorage.setItem('transactions', JSON.stringify(transactions));
+      filteredTransactions = [...transactions];
+      renderTransactions();
+      form.reset();
+    });
+
+    function editTransaction(index) {
+      const t = transactions[index];
+      document.getElementById('date').value = t.date;
+      document.getElementById('description').value = t.description;
+      document.getElementById('amount').value = t.amount;
+      document.getElementById('type').value = t.type;
+      document.getElementById('editIndex').value = index;
+    }
+
+    function deleteTransaction(index) {
+      if (confirm('Yakin ingin menghapus transaksi ini?')) {
+        transactions.splice(index, 1);
+        localStorage.setItem('transactions', JSON.stringify(transactions));
+        filteredTransactions = [...transactions];
+        renderTransactions();
+      }
+    }
+
+    filterForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const start = document.getElementById('filterStart').value;
+      const end = document.getElementById('filterEnd').value;
+
+      filteredTransactions = transactions.filter(t => {
+        return (!start || t.date >= start) && (!end || t.date <= end);
+      });
+
+      renderTransactions();
+    });
+
+    resetFilterBtn.addEventListener('click', () => {
+      filteredTransactions = [...transactions];
+      document.getElementById('filterStart').value = '';
+      document.getElementById('filterEnd').value = '';
+      renderTransactions();
+    });
+
+    renderTransactions();
+  </script>
+</body>
+</html>
