@@ -1,0 +1,12 @@
+GET http://localhost:5000/
+
+###
+POST http://localhost:5000/api/students
+Content-Type: application/json
+
+{
+    "nama_siswa": "septi",
+    "alamat_siswa": "bojongoang",
+    "tanggal_siswa": "2025-09-11",
+    "jurusan_siswa": "otomotif"
+}
