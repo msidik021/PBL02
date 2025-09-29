@@ -26,32 +26,6 @@ body.light-theme {
     color: #33334F;
 }
 
-/* Gaya untuk Halaman Login */
-#loginPage {
-    height: 100vh;
-    width: 100vw;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 2000;
-    background: #121212; 
-    display: flex; /* Diatur ulang oleh JS saat dimuat */
-    justify-content: center;
-    align-items: center;
-}
-
-body.light-theme #loginPage {
-    background-color: #F4F6F9;
-}
-
-/* Sembunyikan konten utama secara default */
-#mainApp {
-    display: none; 
-    flex-grow: 1; 
-    display: flex; /* Diatur ulang oleh JS saat login sukses */
-    flex-direction: column;
-}
-
 header {
     text-align: center;
     padding: 20px;
@@ -296,7 +270,6 @@ body.light-theme tr:hover {
 
 tr td:first-child { border-top-left-radius: 10px; border-bottom-left-radius: 10px; }
 tr td:last-child { border-top-right-radius: 10px; border-bottom-right-radius: 10px; }
-/* Hapus border radius di last-child jika ada kolom Aksi di akhir */
 
 .actions button {
     padding: 8px 16px;
@@ -307,7 +280,6 @@ tr td:last-child { border-top-right-radius: 10px; border-bottom-right-radius: 10
     font-size: 0.9rem;
     font-weight: 500;
     transition: transform 0.2s ease, opacity 0.2s;
-    display: inline-block; /* Default desktop behavior */
 }
 
 .actions button:hover {
@@ -357,16 +329,15 @@ body.light-theme .table-actions select {
 
 /* Export Buttons (Keep functional colors) */
 .table-actions #exportCsvBtn { background: #4CAF50; border: none; }
-.table-actions #exportJsonBtn { background: #9C27B0; border: none; }
 .table-actions #printTableBtn { background: #2196F3; border: none; }
-
+.table-actions #exportJsonBtn { background: #9C27B0; border: none; }
 
 .table-actions #exportCsvBtn:hover { background: #66BB6A; }
 .table-actions #printTableBtn:hover { background: #42A5F5; }
 .table-actions #exportJsonBtn:hover { background: #BA68C8; }
 
 /* Styling for Kelola Kategori button */
-#manageCategoriesBtn, #manageSourcesBtn {
+#manageCategoriesBtn {
     /* Ubah dari #5D3FD3 (Purple) ke Gray */
     background: #555555;
     color: #FFFFFF;
@@ -377,12 +348,9 @@ body.light-theme .table-actions select {
     cursor: pointer;
     transition: background 0.3s ease;
     margin-top: 15px;
-    display: block; /* Make buttons full width in their container */
-    width: 100%;
-    box-sizing: border-box;
 }
 
-#manageCategoriesBtn:hover, #manageSourcesBtn:hover {
+#manageCategoriesBtn:hover {
     background: #666666;
 }
 
@@ -436,9 +404,6 @@ body.light-theme .table-actions select {
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
     position: relative;
     animation: slideUp 0.3s ease-out;
-    /* FIX: Add max-height for mobile to prevent overflow */
-    max-height: 90vh;
-    overflow-y: auto; 
 }
 
 @keyframes slideUp {
@@ -464,8 +429,8 @@ body.light-theme .modal-content {
     color: #FF5252;
 }
 
-/* Category/Source Modal Specific Styles */
-#categoryList div, #sourceList div {
+/* Category Modal Specific Styles */
+#categoryList div {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -473,11 +438,8 @@ body.light-theme .modal-content {
     /* Dark Grey separator */
     border-bottom: 1px solid #333333;
 }
-body.light-theme #categoryList div, body.light-theme #sourceList div {
-    border-bottom: 1px solid #E0E0E0;
-}
 
-#categoryList button, #sourceList button {
+#categoryList button {
     background: #D32F2F;
     color: white;
     padding: 5px 10px;
@@ -523,7 +485,7 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
     }
 
     .summary {
-        grid-template-columns: 1fr; /* Stack summary cards vertically */
+        flex-direction: column;
     }
 
     table, thead, tbody, th, td, tr {
@@ -561,66 +523,15 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
     body.light-theme td::before {
         color: #555577;
     }
-
-    /* OPTIMASI BARU: Tombol Aksi (Edit/Hapus) di Mobile */
-    td[data-label="Aksi"] {
-        /* FIX: Ensure the label is not hidden by the content area */
-        display: flex;
-        flex-direction: column;
-        gap: 8px; /* Spacing between buttons */
-        align-items: flex-end; /* Align buttons to the right */
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-
-    td[data-label="Aksi"]::before {
-        content: attr(data-label);
-        top: 15px; /* Adjust alignment to be near the top */
-    }
-
-    .actions button {
-        display: block; /* Make buttons full width relative to their container */
-        width: 100px; /* Small fixed width for buttons */
-        margin: 0; /* Remove unnecessary margin */
-        text-align: center;
-        /* Reset any padding adjustments if needed */
-        padding: 10px;
-    }
 }
-
-/* OPTIMASI TAMBAHAN: Untuk layar HP yang sangat kecil, paksa form modal menumpuk */
-@media (max-width: 500px) {
-    /* Force single column layout for category/source forms in modal */
-    #newCategoryForm, #addKeywordForm, #newSourceForm {
-        grid-template-columns: 1fr !important; /* Overwrite 1fr auto */
-    }
-    
-    /* Make buttons full width */
-    #newCategoryForm button, #addKeywordForm button, #newSourceForm button {
-         grid-column: 1 / -1 !important; 
-    }
-}
-
 </style>
 </head>
 <body>
-    
-<div id="loginPage" style="display: none;">
-    <div class="card" style="width: 90%; max-width: 400px; text-align: center; padding: 40px;">
-        <h2>🔐 Masuk ke Catatan Keuangan</h2>
-        <p id="setupText" style="color: #B0B0B0;">Atur PIN 4-20 Digit Anda:</p>
-        <form id="loginForm" style="grid-template-columns: 1fr;">
-            <input type="password" id="passwordInput" placeholder="Masukkan PIN/Kata Sandi" maxlength="20" required style="text-align: center;">
-            <button type="submit" id="loginButton">Masuk / Atur PIN</button>
-        </form>
-    </div>
-</div>
-<div id="mainApp" style="display: none;">
     <header>
         📒 Catatan Keuangan <span id="userNameDisplay">Pribadi</span>
         <button id="themeToggleBtn" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); padding: 10px 15px; background: #555555; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem;">☀️/🌙</button>
     </header>
-    <main>
+   <main>
         <div class="card">
             <h2>Profil & Manajemen</h2>
             <div id="profileControls">
@@ -652,12 +563,12 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
                 <input type="date" id="date" required>
                 <input type="text" id="description" placeholder="Deskripsi" required>
                 <input type="number" id="amount" placeholder="Jumlah (Rp)" required>
+                <!-- ✅ FIX: Tambahkan id="type" -->
                 <select id="type" required>
                     <option value="income">Pemasukan</option>
                     <option value="expense">Pengeluaran</option>
                 </select>
                 <select id="categorySelect" required></select>
-                <select id="sourceSelect" required></select> 
                 <button type="submit">Simpan</button>
             </form>
         </div>
@@ -675,7 +586,6 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
                         <option value="expense">Pengeluaran</option>
                     </select>
                     <select id="editCategorySelect"></select>
-                    <select id="editSourceSelect" required></select> 
                     <input type="hidden" id="editId">
                     <button type="submit">Update</button>
                 </form>
@@ -768,22 +678,15 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
                         <th data-sort="amount">Jumlah</th>
                         <th data-sort="type">Jenis</th>
                         <th data-sort="category">Kategori</th>
-                        <th data-sort="sourceBank">Sumber</th> <th>Aksi</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody id="transactionTable"></tbody>
             </table>
-            
             <div class="card" id="categorySummary" style="display:none;">
                 <h2>Ringkasan Pengeluaran per Kategori</h2>
                 <table id="categorySummaryTable"></table>
                 <button id="manageCategoriesBtn">Kelola Kategori</button>
-            </div>
-            
-            <div class="card" id="sourceSummary" style="display:none;">
-                <h2>Ringkasan Pengeluaran per Sumber (Bank/Tunai)</h2>
-                <table id="sourceSummaryTable"></table>
-                <button id="manageSourcesBtn">Kelola Sumber</button>
             </div>
         </div>
         
@@ -813,53 +716,7 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
             </form>
         </div>
     </div>
-    <div id="sourceModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeSourceModal()">&times;</span>
-            <h2>Kelola Sumber (Bank/Tunai)</h2>
-            
-            <p>Sumber yang tersedia:</p>
-            <div id="sourceList">
-                </div>
-            
-            <hr style="border-color: #444444; margin: 20px 0;">
-
-            <form id="newSourceForm" style="grid-template-columns: 1fr auto;">
-                <input type="text" id="newSourceName" placeholder="Nama Sumber Baru (cth: Bank BCA, Kas Tunai)" required>
-                <button type="submit" style="grid-column: auto; background: #4CAF50;">Tambah Sumber</button>
-            </form>
-        </div>
-    </div>
-    </div>
-<script>
-        // --- Fungsi Enkripsi Sederhana (Login) ---
-        const simpleEncrypt = (data, key) => {
-            let encrypted = '';
-            for (let i = 0; i < data.length; i++) {
-                const charCode = data.charCodeAt(i) ^ key.charCodeAt(i % key.length);
-                encrypted += String.fromCharCode(charCode);
-            }
-            return btoa(encrypted); // Base64 encoding
-        };
-
-        const simpleDecrypt = (encrypted, key) => {
-            try {
-                let decrypted = '';
-                const decoded = atob(encrypted);
-                for (let i = 0; i < decoded.length; i++) {
-                    const charCode = decoded.charCodeAt(i) ^ key.charCodeAt(i % key.length);
-                    decrypted += String.fromCharCode(charCode);
-                }
-                return decrypted;
-            } catch {
-                return ''; 
-            }
-        };
-
-        const SECRET_KEY = "KEUANGANRAHASIA"; 
-        // --- Akhir Fungsi Enkripsi Sederhana ---
-
-
+    <script>
         const editModal = document.getElementById('editModal');
         const categoryModal = document.getElementById('categoryModal');
         const manageCategoriesBtn = document.getElementById('manageCategoriesBtn');
@@ -894,37 +751,26 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
         const editCategorySelect = document.getElementById('editCategorySelect');
         const categorySummaryTable = document.getElementById('categorySummaryTable');
         
-        // Konstanta Login
-        const loginPage = document.getElementById('loginPage');
-        const mainApp = document.getElementById('mainApp');
-        const loginForm = document.getElementById('loginForm');
-        const passwordInput = document.getElementById('passwordInput');
-        const loginButton = document.getElementById('loginButton');
-        const setupText = document.getElementById('setupText');
-
-        // BARU: Konstanta Sumber Bank/Tunai
-        const sourceSelect = document.getElementById('sourceSelect');
-        const editSourceSelect = document.getElementById('editSourceSelect');
-        const sourceModal = document.getElementById('sourceModal');
-        const manageSourcesBtn = document.getElementById('manageSourcesBtn');
-        const sourceListEl = document.getElementById('sourceList');
-        const newSourceForm = document.getElementById('newSourceForm');
-        const sourceSummaryTable = document.getElementById('sourceSummaryTable');
 
         let transactions = [];
         let filteredTransactions = [];
         let sortColumn = 'date';
         let sortDirection = 'asc';
         let currencySymbol = 'Rp';
-        let categories = {}; // Di-initialize di loadData
-        let sources = []; // Di-initialize di loadData
+        let categories = {
+            'Pemasukan': [],
+            'Makanan & Minuman': [],
+            'Transportasi': [],
+            'Belanja': [],
+            'Tagihan': [],
+            'Hiburan': [],
+            'Lain-lain': []
+        };
         let budget = 0;
-        
-        // FIX: Tambahkan variabel untuk ID transaksi
-        let nextId = 1;
 
 
-        // Chart setup - (No need to update chart logic for source, as sources don't change income/expense totals)
+        // Chart setup - (No change needed here)
+
         const ctxFinance = document.getElementById('financeChart').getContext('2d');
         let financeChart = new Chart(ctxFinance, {
             type: 'doughnut',
@@ -1002,16 +848,11 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
             const storedCategories = localStorage.getItem('categories');
             const storedBudget = localStorage.getItem('budget');
             const storedUserName = localStorage.getItem('userName');
-            const storedSources = localStorage.getItem('sources');
             
             if (storedTransactions) transactions = JSON.parse(storedTransactions);
             if (storedCategories) categories = JSON.parse(storedCategories);
             if (storedBudget) budget = parseFloat(storedBudget);
             if (storedUserName) userNameDisplay.textContent = storedUserName;
-            if (storedSources) sources = JSON.parse(storedSources);
-            
-            // FIX: Hitung nextId dari transaksi yang sudah ada
-            nextId = transactions.length > 0 ? Math.max(...transactions.map(t => t.id)) + 1 : 1;
 
             // Initialize default categories if none found 
             if (!storedCategories || Object.keys(categories).length === 0) {
@@ -1025,16 +866,10 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
                     'Lain-lain': []
                 };
             }
-            // Ensure default sources exist if none were stored
-            if (!storedSources || sources.length === 0) {
-                 // MODIFIKASI: Menambahkan Bank BRI, SeaBank, dan ShopeePay
-                 sources = ['Kas Tunai', 'Bank BCA', 'Bank Mandiri', 'Bank BRI', 'SeaBank', 'ShopeePay', 'E-Wallet Dana', 'E-Wallet GoPay'];
-            }
             
             document.getElementById('budgetAmount').value = budget;
             
             populateCategorySelects();
-            populateSourceSelects(); 
             applyFilters(); // Renders transactions, updates summary/charts
         }
         
@@ -1043,76 +878,36 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
             localStorage.setItem('categories', JSON.stringify(categories));
             localStorage.setItem('budget', budget);
             localStorage.setItem('userName', userNameDisplay.textContent);
-            localStorage.setItem('sources', JSON.stringify(sources));
         }
-
-        // --- CORE CRUD FUNCTIONS (FIXED: The missing functions) ---
         
-        /** Menambahkan transaksi baru */
-        async function addTransaction(t) {
-            // FIX: Generate ID for new transaction using the global counter
-            t.id = nextId++; 
-            // Automatically determine category if not manually set (which it is via the form)
-            t.category = t.category || getCategory(t.description, t.type); 
-            // Ensure amount is float
-            t.amount = parseFloat(t.amount); 
-            
-            transactions.push(t);
-            saveData();
-            applyFilters(); // Re-filter and re-render
-        }
-
-        /** Mengubah transaksi yang sudah ada */
-        async function updateTransaction(id, updatedTransaction) {
-            const index = transactions.findIndex(t => t.id == id);
-            if (index !== -1) {
-                const existing = transactions[index];
-                
-                existing.date = updatedTransaction.date;
-                existing.description = updatedTransaction.description;
-                existing.amount = parseFloat(updatedTransaction.amount);
-                existing.type = updatedTransaction.type;
-                existing.category = updatedTransaction.type === 'income' ? 'Pemasukan' : updatedTransaction.category; 
-                existing.sourceBank = updatedTransaction.sourceBank; 
-
-                saveData();
-                applyFilters(); // Re-filter dan re-render
-            }
-        }
-
-        /** Menghapus transaksi */
-        function deleteTransaction(id) {
-            if (confirm('Yakin ingin menghapus transaksi ini?')) {
-                transactions = transactions.filter(t => t.id !== id);
-                saveData();
-                applyFilters(); // Re-filter dan re-render
-            }
-        }
-        // --- END CORE CRUD FUNCTIONS ---
-
-
-        // --- Fungsi Otentikasi ---
-        function checkAuth() {
-            const storedHash = localStorage.getItem('userPasswordHash');
-            
-            loginPage.style.display = 'flex';
-            mainApp.style.display = 'none';
-
-            if (storedHash) {
-                setupText.textContent = "Masukkan PIN/Kata Sandi Anda:";
-                loginButton.textContent = "Masuk";
-            } else {
-                setupText.textContent = "Atur PIN/Kata Sandi (Min. 4 Karakter):";
-                loginButton.textContent = "Atur & Masuk";
-            }
-        }
-
-        function loginSuccess() {
-            loginPage.style.display = 'none';
-            mainApp.style.display = 'flex'; 
+        async function fetchTransactions() {
             loadData(); 
         }
-        // --- Akhir Fungsi Otentikasi ---
+
+        async function addTransaction(newTransaction) {
+            newTransaction.id = Date.now();
+            transactions.push(newTransaction);
+            saveData();
+            applyFilters();
+        }
+
+        async function updateTransaction(id, updatedTransaction) {
+            const index = transactions.findIndex(t => t.id === parseFloat(id));
+            if (index !== -1) {
+                transactions[index] = { ...transactions[index], ...updatedTransaction };
+                saveData();
+                applyFilters();
+            }
+        }
+
+        async function deleteTransaction(id) {
+            if (confirm('Yakin ingin menghapus transaksi ini?')) {
+                transactions = transactions.filter(t => t.id !== parseFloat(id));
+                saveData();
+                applyFilters();
+            }
+        }
+        // --- End Data Fetching/Persistence ---
 
 
         function getCategory(description, type) {
@@ -1138,13 +933,8 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
                     valA = new Date(valA);
                     valB = new Date(valB);
                 } else if (sortColumn === 'amount') {
-                    valA = parseFloat(a.amount); // Pastikan pakai 'amount' karena di-filter di luar
-                    valB = parseFloat(b.amount);
-                }
-                // Handle string sorting for category/sourceBank
-                if (typeof valA === 'string') {
-                    valA = valA.toLowerCase();
-                    valB = valB.toLowerCase();
+                    valA = parseFloat(valA);
+                    valB = parseFloat(valB);
                 }
 
                 if (valA < valB) {
@@ -1162,17 +952,13 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
             transactionTable.innerHTML = '';
             filteredTransactions.forEach(t => {
                 const row = document.createElement('tr');
-                // FIX: Memastikan category ada di objek transaksi yang lama, jika tidak panggil getCategory
                 const displayCategory = t.category || getCategory(t.description, t.type); 
-                const displaySource = t.sourceBank || 'N/A';
-                
                 row.innerHTML = `
                     <td data-label="Tanggal">${t.date}</td>
                     <td data-label="Deskripsi">${t.description}</td>
                     <td data-label="Jumlah">${currencySymbol} ${parseFloat(t.amount).toLocaleString('id-ID')}</td>
                     <td data-label="Jenis">${t.type === 'income' ? 'Pemasukan' : 'Pengeluaran'}</td>
                     <td data-label="Kategori">${displayCategory}</td>
-                    <td data-label="Sumber">${displaySource}</td>
                     <td data-label="Aksi" class="actions">
                         <button class="edit-btn" onclick="openEditModal(${t.id})">Edit</button>
                         <button class="delete-btn" onclick="deleteTransaction(${t.id})">Hapus</button>
@@ -1192,18 +978,15 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
 
             transactions.forEach(t => {
                 const transactionDate = new Date(t.date);
-                // FIX: Pastikan amount adalah float
-                const amount = parseFloat(t.amount); 
-
                 if (t.type === 'income') {
-                    totalIncome += amount;
+                    totalIncome += parseFloat(t.amount);
                     if (transactionDate.getMonth() === currentMonth && transactionDate.getFullYear() === currentYear) {
-                        monthlyIncome += amount;
+                        monthlyIncome += parseFloat(t.amount);
                     }
                 } else {
-                    totalExpense += amount;
+                    totalExpense += parseFloat(t.amount);
                     if (transactionDate.getMonth() === currentMonth && transactionDate.getFullYear() === currentYear) {
-                        monthlyExpense += amount;
+                        monthlyExpense += parseFloat(t.amount);
                     }
                 }
             });
@@ -1218,14 +1001,14 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
 
             updateBudgetTracker(monthlyExpense);
             updateCategorySummary(filteredTransactions);
-            updateSourceSummary(filteredTransactions); 
         }
-        
+
         function updateCharts() {
             // Doughnut Chart
             const totalIncome = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + parseFloat(t.amount), 0);
             const totalExpense = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + parseFloat(t.amount), 0);
             financeChart.data.datasets[0].data = [totalIncome, totalExpense];
+            // Ensure chart color inherited correctly for dark/light switch
             financeChart.options.plugins.legend.labels.color = document.body.classList.contains('light-theme') ? '#333' : '#E0E0F0';
             financeChart.update();
 
@@ -1239,13 +1022,14 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
                 if (categoryTotals[category] !== undefined) { 
                     categoryTotals[category] += parseFloat(t.amount);
                 } else {
-                    categoryTotals['Lain-lain'] = (categoryTotals['Lain-lain'] || 0) + parseFloat(t.amount); 
+                    categoryTotals['Lain-lain'] += parseFloat(t.amount); 
                 }
             });
             const chartLabels = Object.keys(categoryTotals).filter(key => categoryTotals[key] > 0);
             const chartData = chartLabels.map(key => categoryTotals[key]);
             
             const chartColors = chartLabels.map(label => {
+                // Using a non-purple, distinct color palette for categories
                 const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9933', '#9C27B0'];
                 let hash = 0;
                 for (let i = 0; i < label.length; i++) {
@@ -1305,7 +1089,7 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
                  if (expenseTotals[category] !== undefined) {
                     expenseTotals[category] += parseFloat(t.amount);
                 } else {
-                    expenseTotals['Lain-lain'] = (expenseTotals['Lain-lain'] || 0) + parseFloat(t.amount);
+                    expenseTotals['Lain-lain'] += parseFloat(t.amount);
                 }
             });
             
@@ -1324,42 +1108,7 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
                 tbody.appendChild(row);
             });
 
-            document.getElementById('categorySummary').style.display = displayTotals.length > 0 ? 'block' : 'none';
-        }
-        
-        // Fungsi untuk mengupdate ringkasan pengeluaran per sumber
-        function updateSourceSummary(transactionsToSummarize) {
-            const sourceTotals = {};
-            sources.forEach(source => sourceTotals[source] = 0);
-            sourceTotals['Lain-lain'] = 0; // Tambahkan kategori 'Lain-lain' untuk sumber yang tidak terlacak/baru
-
-            transactionsToSummarize.filter(t => t.type === 'expense').forEach(t => {
-                // FIX: Gunakan t.sourceBank yang mungkin null
-                const source = t.sourceBank && sources.includes(t.sourceBank) ? t.sourceBank : 'Lain-lain';
-                sourceTotals[source] += parseFloat(t.amount);
-            });
-
-            const displayTotals = Object.keys(sourceTotals).filter(key => sourceTotals[key] > 0);
-            
-            if (displayTotals.length === 0) {
-                document.getElementById('sourceSummary').style.display = 'none';
-                return;
-            }
-
-            const summaryHeaders = `<thead><tr><th>Sumber</th><th>Total Pengeluaran</th></tr></thead>`;
-            sourceSummaryTable.innerHTML = summaryHeaders + `<tbody></tbody>`;
-            const tbody = sourceSummaryTable.querySelector('tbody');
-            
-            displayTotals.forEach(source => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${source}</td>
-                    <td>${currencySymbol} ${sourceTotals[source].toLocaleString('id-ID')}</td>
-                `;
-                tbody.appendChild(row);
-            });
-            
-            document.getElementById('sourceSummary').style.display = 'block';
+            document.getElementById('categorySummary').style.display = 'block';
         }
 
         function updateBudgetTracker(monthlyExpense) {
@@ -1392,20 +1141,6 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
             }
         }
         
-        function populateSourceSelects() {
-            sourceSelect.innerHTML = '';
-            editSourceSelect.innerHTML = '';
-            
-            sources.forEach(source => {
-                const option = document.createElement('option');
-                option.value = source;
-                option.textContent = source;
-                
-                sourceSelect.appendChild(option);
-                editSourceSelect.appendChild(option.cloneNode(true));
-            });
-        }
-        
         function openEditModal(id) {
             const transaction = transactions.find(t => t.id === id);
             if (transaction) {
@@ -1416,9 +1151,6 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
                 
                 const category = transaction.category || getCategory(transaction.description, transaction.type);
                 document.getElementById('editCategorySelect').value = category;
-
-                const source = transaction.sourceBank || sources[0]; 
-                document.getElementById('editSourceSelect').value = source;
 
                 document.getElementById('editId').value = id;
                 editModal.style.display = 'flex';
@@ -1442,24 +1174,25 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
                 const matchesDate = (!startDate || t.date >= startDate) && (!endDate || t.date <= endDate);
                 const matchesType = (transactionType === 'all' || t.type === transactionType);
                 const matchesAmount = (parseFloat(t.amount) >= minAmount && parseFloat(t.amount) <= maxAmount);
-                const matchesSearch = (t.description || '').toLowerCase().includes(searchQuery) || 
-                                      (t.sourceBank || '').toLowerCase().includes(searchQuery); 
+                const matchesSearch = (t.description || '').toLowerCase().includes(searchQuery);
                 return matchesDate && matchesType && matchesAmount && matchesSearch;
             });
             sortTransactions();
         }
 
         function exportCsv() {
+            // FIX: Mengganti koma (,) menjadi titik koma (;) sebagai pemisah 
+            // agar kompatibel dengan Excel di Indonesia/Eropa.
             const delimiter = ';'; 
             const csvRows = [];
-            const headers = ['ID', 'Tanggal', 'Deskripsi', 'Jumlah', 'Jenis', 'Kategori', 'Sumber'];
+            const headers = ['ID', 'Tanggal', 'Deskripsi', 'Jumlah', 'Jenis', 'Kategori'];
             csvRows.push(headers.join(delimiter));
             
             filteredTransactions.forEach(t => {
                 const displayCategory = t.category || getCategory(t.description, t.type);
-                const displaySource = t.sourceBank || 'N/A'; 
+                // Menjamin Deskripsi diapit tanda kutip dan kutip di dalamnya di-escape
                 const descriptionField = `"${String(t.description).replace(/"/g, '""')}"`; 
-                const row = [t.id, t.date, descriptionField, t.amount, t.type, displayCategory, displaySource];
+                const row = [t.id, t.date, descriptionField, t.amount, t.type, displayCategory];
                 csvRows.push(row.join(delimiter));
             });
             
@@ -1480,8 +1213,7 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
                 transactions: transactions,
                 categories: categories,
                 budget: budget,
-                userName: userNameDisplay.textContent,
-                sources: sources 
+                userName: userNameDisplay.textContent
             };
             const jsonString = JSON.stringify(dataToExport, null, 2);
             const blob = new Blob([jsonString], { type: 'application/json;charset=utf-8;' });
@@ -1569,85 +1301,17 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
         }
         // --- END Category Modal Functions ---
 
-        // --- Source Modal Functions ---
-        function openSourceModal() {
-            renderSourceList();
-            sourceModal.style.display = 'flex';
-        }
-
-        function closeSourceModal() {
-            sourceModal.style.display = 'none';
-        }
-
-        function renderSourceList() {
-            sourceListEl.innerHTML = '';
-            sources.forEach(source => {
-                const div = document.createElement('div');
-                div.innerHTML = `
-                    <span>${source}</span>
-                    <button onclick="deleteSource('${source}')">Hapus</button>
-                `;
-                sourceListEl.appendChild(div);
-            });
-        }
-
-        function deleteSource(sourceName) {
-            if (sources.length <= 1) {
-                 alert('Tidak bisa menghapus sumber terakhir.');
-                 return;
-            }
-            if (confirm(`Yakin ingin menghapus sumber "${sourceName}"? Transaksi yang sudah ada akan tetap menampilkan nama ini sampai Anda mengeditnya.`)) {
-                sources = sources.filter(s => s !== sourceName);
-                saveData();
-                populateSourceSelects();
-                renderSourceList();
-                applyFilters(); 
-            }
-        }
-        // --- END Source Modal Functions ---
-
 
         // Event listeners
-        loginForm.addEventListener('submit', e => {
-            e.preventDefault();
-            const password = passwordInput.value;
-            const storedHash = localStorage.getItem('userPasswordHash');
-
-            if (!storedHash) {
-                if (password.length < 4) {
-                     alert('PIN/Kata Sandi harus minimal 4 karakter.');
-                     return;
-                }
-                const encryptedPassword = simpleEncrypt(password, SECRET_KEY);
-                localStorage.setItem('userPasswordHash', encryptedPassword);
-                alert('PIN berhasil diatur. Anda telah masuk!');
-                loginSuccess();
-
-            } else {
-                const decryptedPassword = simpleDecrypt(storedHash, SECRET_KEY);
-                
-                if (password === decryptedPassword) {
-                    alert('Login Berhasil!');
-                    loginSuccess();
-                } else {
-                    alert('PIN/Kata Sandi Salah.');
-                    passwordInput.value = '';
-                }
-            }
-        });
-
-
         form.addEventListener('submit', async e => {
             e.preventDefault();
             const date = document.getElementById('date').value;
             const description = document.getElementById('description').value;
             const amount = document.getElementById('amount').value;
             const type = document.getElementById('type').value;
-            // Gunakan nilai categorySelect hanya jika jenisnya expense
-            const selectedCategory = type === 'expense' ? document.getElementById('categorySelect').value : 'Pemasukan'; 
-            const sourceBank = document.getElementById('sourceSelect').value;
+            const selectedCategory = type === 'income' ? 'Pemasukan' : document.getElementById('categorySelect').value;
             
-            const newTransaction = { date, description, amount, type, category: selectedCategory, sourceBank };
+            const newTransaction = { date, description, amount, type, category: selectedCategory };
             await addTransaction(newTransaction);
             form.reset();
         });
@@ -1655,37 +1319,17 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
         editForm.addEventListener('submit', async e => {
             e.preventDefault();
             const id = document.getElementById('editId').value;
-            const type = document.getElementById('editType').value;
             const updatedTransaction = {
                 date: document.getElementById('editDate').value,
                 description: document.getElementById('editDescription').value,
                 amount: document.getElementById('editAmount').value,
-                type: type,
-                // Gunakan nilai editCategorySelect hanya jika jenisnya expense
-                category: type === 'expense' ? document.getElementById('editCategorySelect').value : 'Pemasukan',
-                sourceBank: document.getElementById('editSourceSelect').value
+                type: document.getElementById('editType').value,
+                category: document.getElementById('editCategorySelect').value
             };
             await updateTransaction(id, updatedTransaction);
             closeEditModal();
         });
 
-
-        newSourceForm.addEventListener('submit', e => {
-            e.preventDefault();
-            const name = document.getElementById('newSourceName').value.trim();
-            if (name && !sources.includes(name)) {
-                sources.push(name);
-                saveData();
-                populateSourceSelects();
-                renderSourceList();
-                document.getElementById('newSourceName').value = '';
-            } else {
-                alert('Nama sumber tidak valid atau sudah ada.');
-            }
-        });
-
-        manageSourcesBtn.addEventListener('click', openSourceModal);
-        
         applyFiltersBtn.addEventListener('click', applyFilters);
         resetFiltersBtn.addEventListener('click', () => {
             document.getElementById('filterStart').value = '';
@@ -1720,25 +1364,22 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
         exportJsonBtn.addEventListener('click', exportJson);
         printTableBtn.addEventListener('click', () => window.print());
         clearDataBtn.addEventListener('click', async () => {
-            if (confirm('Yakin ingin menghapus semua data transaksi, anggaran, kategori, dan sumber? Tindakan ini tidak bisa dibatalkan.')) {
+            if (confirm('Yakin ingin menghapus semua data transaksi, anggaran, dan kategori? Tindakan ini tidak bisa dibatalkan.')) {
                 transactions = [];
-                // Reset categories and sources to defaults
                 categories = {
                     'Pemasukan': [],
-                    'Makanan & Minuman': ['makan', 'minum', 'kopi', 'restoran'],
-                    'Transportasi': ['bensin', 'tol', 'ojek', 'taksi', 'kereta'],
-                    'Belanja': ['baju', 'sepatu', 'elektronik', 'online shop'],
-                    'Tagihan': ['listrik', 'air', 'internet', 'pulsa'],
-                    'Hiburan': ['bioskop', 'game', 'liburan', 'konser'],
+                    'Makanan & Minuman': [],
+                    'Transportasi': [],
+                    'Belanja': [],
+                    'Tagihan': [],
+                    'Hiburan': [],
                     'Lain-lain': []
                 }; 
-                // MODIFIKASI: Reset ke daftar sumber yang baru
-                sources = ['Kas Tunai', 'Bank BCA', 'Bank Mandiri', 'Bank BRI', 'SeaBank', 'ShopeePay', 'E-Wallet Dana', 'E-Wallet GoPay'];
                 budget = 0;
                 localStorage.clear(); 
-                localStorage.removeItem('userPasswordHash');
+                applyFilters();
+                populateCategorySelects();
                 alert('Semua data berhasil dihapus.');
-                checkAuth(); // Kembali ke layar login
             }
         });
 
@@ -1754,12 +1395,9 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
                         categories = importedData.categories || categories;
                         budget = importedData.budget || 0;
                         userNameDisplay.textContent = importedData.userName || 'Pribadi';
-                        sources = importedData.sources || sources; 
 
                         saveData();
-                        // FIX: Panggil populate setelah data di-load
                         populateCategorySelects();
-                        populateSourceSelects();
                         applyFilters();
                         alert('Data berhasil diimpor!');
                     } else {
@@ -1808,8 +1446,8 @@ body.light-theme #categoryList div, body.light-theme #sourceList div {
             });
         });
         
-        // Initial load: Check Authentication first
-        checkAuth();
+        // Initial load
+        fetchTransactions();
 </script>
 </body>
 </html>
